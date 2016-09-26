@@ -85,6 +85,7 @@ COPY ssl/deployment.key.pub /root/.ssh/id_rsa.pub
 COPY ssl/config /root/.ssh/config
 RUN ssh-keyscan guthub.com >> ~/.ssh/known_hosts
 
+RUN git lfs pull
 
 #oracle will probably winge at this but its so much easier...
 COPY rpm/oracle-instantclient12* /tmp/
