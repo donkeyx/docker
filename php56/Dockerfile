@@ -31,6 +31,7 @@ RUN yum update -y && yum install -y \
 	httpd.x86_64 \
 	httpd-tools.x86_64
 
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
 #RUN	yum groupinstall "Development tools"
 
 RUN yum install -y \
