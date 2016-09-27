@@ -19,10 +19,15 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
 RUN yum install -y https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-2.noarch.rpm
 RUN yum remove -y postgresql.x86_64
 
+#add in the repo for github large file system
+COPY repo/*.sh /tmp/
+RUN os=el dist=7 /tmp/github_git-lfs.sh
+
 RUN yum update -y && yum install -y \
 	sudo \
 	gcc \
 	git.x86_64 \
+	git-lfs.x86_64 \
 	postgresql95.x86_64 \
 	openssl.x86_64 \
 	memcached.x86_64 \
@@ -30,12 +35,6 @@ RUN yum update -y && yum install -y \
 	sqlite.x86_64 \
 	httpd.x86_64 \
 	httpd-tools.x86_64
-
-#surely there is a cleaner way to run this???
-RUN curl -O -k https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh
-RUN chmod o+x script.rpm.sh; ./script.rpm.sh
-
-#RUN	yum groupinstall "Development tools"
 
 RUN yum install -y \
 	php56w-cli.x86_64 \
