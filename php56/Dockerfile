@@ -32,7 +32,7 @@ RUN yum update -y && yum install -y \
 	httpd-tools.x86_64
 
 #surely there is a cleaner way to run this???
-RUN wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh
+RUN curl -O -k https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh
 RUN chmod o+x script.rpm.sh; ./script.rpm.sh
 
 #RUN	yum groupinstall "Development tools"
