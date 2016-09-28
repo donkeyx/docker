@@ -88,11 +88,17 @@ COPY ssl/deployment.key.pub /root/.ssh/id_rsa.pub
 COPY ssl/config /root/.ssh/config
 RUN ssh-keyscan guthub.com >> ~/.ssh/known_hosts
 
-#oracle will probably winge at this but its so much easier...
-COPY rpm/oracle-instantclient12* /tmp/
-RUN rpm -ivh /tmp/oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm && \
-	rpm -ivh /tmp/oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm && \
-	rpm -ivh /tmp/oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm
+# #oracle will probably winge at this but its so much easier...
+# COPY rpm/oracle-instantclient12* /tmp/
+# RUN rpm -ivh /tmp/oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm && \
+# 	rpm -ivh /tmp/oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm && \
+# 	rpm -ivh /tmp/oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm
+
+#FIXME -- this bullshit only exists because dockhub does not download the git-lfs files
+RUN git clone git@github.com:donkeyx/oel-apache-php.git /tmp/oel-apache-repo
+RUN rpm -ivh /tmp/oel-apache-repo/php56/oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm && \
+	rpm -ivh /tmp/oel-apache-repo/php56/oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm && \
+	rpm -ivh /tmp/oel-apache-repo/php56/oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm
 
 RUN yes "" | pecl install oci8-2.0.12
 
