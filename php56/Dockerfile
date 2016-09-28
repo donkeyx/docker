@@ -72,6 +72,9 @@ ENV CONF_WWWROOT="/var/www/html" \
 RUN pecl config-set php_ini /etc/php.ini
 RUN pear config-set php_ini /etc/php.ini
 
+## git config so git pulls including composer etc can pull un-authed
+RUN git config --global url."https://github.com/".insteadOf "git@github.com:"
+
 WORKDIR ${CONF_WWWROOT}
 
 # COPY . ${CONF_WWWROOT}
@@ -106,8 +109,6 @@ RUN yes "" | pecl install oci8-2.0.12
 #	eval $(ssh-agent -s)
 	# ssh-add /root/.ssh/deployment.key
 
-## git config so composer etc can pull un-authed
-RUN git config --global url."https://github.com/".insteadOf "git@github.com:"
 
 
 ## php specific config stuff
