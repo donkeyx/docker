@@ -111,9 +111,10 @@ RUN yes "" | pecl install odbtp
 #	eval $(ssh-agent -s)
 	# ssh-add /root/.ssh/deployment.key
 
-
+RUN cat /etc/php.ini
 
 ## php specific config stuff
 RUN sed -i "s|;date.timezone =|date.timezone = Australia/Brisbane|g" /etc/php.ini; \
-	sed -i "s|display_errors = Off|display_errors = stderr|g" /etc/php.ini
+	sed -i "s|display_errors = Off|display_errors = On|g" /etc/php.ini; \
+	sed -i "s|error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = E_ALL|g" /etc/php.ini
 
