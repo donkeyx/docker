@@ -89,6 +89,7 @@ RUN chown -R apache:apache ${CONF_WWWROOT}
 COPY ssl/deployment.key /root/.ssh/id_rsa
 COPY ssl/deployment.key.pub /root/.ssh/id_rsa.pub
 COPY ssl/config /root/.ssh/config
+RUN chmod 600 /root/.ssh/id_rsa
 RUN ssh-keyscan guthub.com >> ~/.ssh/known_hosts
 
 # #oracle will probably winge at this but its so much easier...
